@@ -2,9 +2,8 @@
 # tasks file for jinja2_spine
   - name: Generate Spine Config
     template:
-      src: roles/jinja2_spine/templates/spine-basic.j2
+      src: roles/jinja2_spine/templates/spine.j2
       dest: roles/jinja2_spine/files/{{inventory_hostname}}.cfg
   - name: Push Spine Config
     nxos_config:
       src: roles/jinja2_spine/files/{{inventory_hostname}}.cfg
-#      src: cfgs/test.cfg
