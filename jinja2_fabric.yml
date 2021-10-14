@@ -1,0 +1,7 @@
+---
+  - hosts: spine
+    roles:
+      - jinja2_spine
+  - hosts: leaf
+    roles:
+      - jinja2_leaf

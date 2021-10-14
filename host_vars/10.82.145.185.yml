@@ -1,0 +1,5 @@
+---
+  hostname: leaf_1
+  loopback0: 192.168.0.8
+  loopback1: 192.168.0.18
+  router_id: 192.168.0.8

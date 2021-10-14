@@ -1,0 +1,5 @@
+---
+  hostname: spine-1
+  loopback0: 192.168.0.6
+  loopback1: 192.168.0.100
+  router_id: 192.168.0.6

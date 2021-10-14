@@ -1,0 +1,40 @@
+nv overlay evpn
+feature ospf
+feature bgp
+feature pim
+feature vn-segment-vlan-based
+feature nv overlay
+
+ip pim rp-address {{loopback1}}
+ip pim anycast-rp {{loopback1}} {{s1_loopback}}
+ip pim anycast-rp {{loopback1}} {{s2_loopback}}
+
+#for loop to enable pim on link to each leaf
+{% for interface in L3_interfaces %}
+interface {{interface['interface']}}
+#  no switchport
+  ip pim sparse-mode
+
+{% endfor %}
+interface loopback 1
+  ip address {{loopback1}}/32
+  ip pim sparse-mode
+  ip router ospf 1 area 0.0.0.0
+
+router bgp {{ asn }}
+  router-id {{ router_id }}
+  address-family ipv4 unicast
+  address-family l2vpn evpn
+    retain route-target all
+#for loop to configure bgp neighbor for each leaf
+{% for neighbor in bgp_neighbors %}
+  neighbor {{neighbor['neighbor']}}
+    remote-as {{neighbor['remote_as']}}
+    update-source {{neighbor['update_source']}}
+    address-family ipv4 unicast
+     send-community both
+     route-reflector-client
+    address-family l2vpn evpn
+      send-community both
+      route-reflector-client
+{% endfor %}
