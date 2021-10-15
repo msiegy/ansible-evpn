@@ -1,5 +1,12 @@
 ---
   hostname: spine1
-  loopback0: 192.168.0.6
-  loopback1: 192.168.0.100
-  router_id: 192.168.0.6
+  loopback0: 100.66.0.5
+  loopback254: 100.66.8.1
+  router_id: 100.66.0.5
+  fabric_interfaces:
+  -  interface: Ethernet 1/1
+     description: "Underlay Connection to Leaf1"
+     ip_add: 100.66.0.12/31
+  -  interface: Ethernet 1/2
+     description: "Underlay Connection to Leaf2"
+     ip_add: 100.66.0.9/31

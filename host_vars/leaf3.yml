@@ -1,6 +1,0 @@
----
-  hostname: leaf3
-  loopback0: 192.168.0.10
-  loopback1: 192.168.0.110
-  router_id: 192.168.0.10
-

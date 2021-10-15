@@ -5,13 +5,10 @@
   password: "{{ pwd }}"
   timeout: 100
   host: "{{ inventory_hostname }}"
-  asn: 65000
+  asn: 65401
   bgp_neighbors:
-  -  remote_as: 65000
-     neighbor: 192.168.0.6
-     update_source: Loopback0
-  -  remote_as: 65000
-     neighbor: 192.168.0.7
+  -  remote_as: 65401
+     neighbor: 100.66.0.5
      update_source: Loopback0
   rp_address: 192.168.0.100
   L3_interfaces:
