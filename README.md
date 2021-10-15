@@ -9,30 +9,34 @@ Automate EVPN fabrics with Ansible
 
 #### Directory Structure
 ```bash
-hosts.ini
-ansible.cfg
-host_vars
- ── leaf1.yml
- ── leaf2.yml
- ── spine1.yml
-roles
-├── jinja2_leaf
-│   └── tasks
-│       └── main.yml
-│   └── templates
-│       └── leaf.j2
-│   └── vars
-│       └── main.yml
-│   └── files
-│       └── leaf1.cfg
-│       └── leaf2.cfg
-├── jinja2_spine
-│   └── tasks
-│       └── main.yml
-│   └── templates
-│       └── spine.j2
-│   └── vars
-│       └── main.yml
-│   └── files
-│       └── spine1.cfg
+├── ansible.cfg
+├── hosts.ini
+├── host_vars
+│   ├── leaf1.yml
+│   ├── leaf2.yml
+│   └── spine1.yml
+├── jinja2_fabric.yml
+├── README.md
+├── requirements.txt
+├── roles
+│   ├── jinja2_leaf
+│   │   ├── files
+│   │   │   ├── leaf1.cfg
+│   │   │   ├── leaf2.cfg
+│   │   │   └── leaf3.cfg
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   ├── templates
+│   │   │   └── leaf.j2
+│   │   └── vars
+│   │       └── main.yml
+│   └── jinja2_spine
+│       ├── files
+│       │   └── spine1.cfg
+│       ├── tasks
+│       │   └── main.yml
+│       ├── templates
+│       │   └── spine.j2
+│       └── vars
+│           └── main.yml
 ```
