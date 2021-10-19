@@ -8,7 +8,6 @@ feature interface-vlan
 feature vn-segment-vlan-based
 feature lacp
 feature dhcp
-feature vpc
 feature lldp
 feature nv overlay
 feature ngoam
@@ -80,7 +79,6 @@ router ospf UNDERLAY
 router bgp {{ asn }}
   router-id {{ router_id }}
   address-family l2vpn evpn
-    advertise-pip
 #for loop to configure bgp neighbor with spines
 {% for neighbor in bgp_neighbors %}
   neighbor {{neighbor['neighbor']}}

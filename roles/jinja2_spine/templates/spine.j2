@@ -5,6 +5,8 @@ feature pim
 feature vn-segment-vlan-based
 feature nv overlay
 
+hostname {{inventory_hostname}}
+
 ip pim rp-address {{loopback254}}
 ip pim anycast-rp {{loopback254}} {{loopback0}}
 #ip pim anycast-rp {{loopback254}} {{loopback0}}
@@ -39,7 +41,6 @@ router bgp {{ asn }}
   address-family ipv4 unicast
   #redistribute direct route-map rmap-redist-direct
   address-family l2vpn evpn
-    advertise-pip
 #for loop to configure bgp neighbor with leafs
 {% for neighbor in bgp_neighbors %}
   neighbor {{neighbor['neighbor']}}
@@ -48,5 +49,6 @@ router bgp {{ asn }}
     address-family l2vpn evpn
       send-community
       send-community extended
+      route-reflector-client
 !
 {% endfor %}

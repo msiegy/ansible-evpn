@@ -3,6 +3,7 @@
   loopback0: 100.66.0.4/32
   loopback1: 100.66.4.4/32
   router_id: 100.66.0.4
+  rp_address: 100.66.8.1
   fabric_interfaces:
   -  interface: Ethernet 1/1
      description: "Underlay Connection to Spine1"

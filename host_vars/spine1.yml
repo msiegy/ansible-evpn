@@ -3,6 +3,7 @@
   loopback0: 100.66.0.5
   loopback254: 100.66.8.1
   router_id: 100.66.0.5
+  rp_address: 100.66.8.1
   fabric_interfaces:
   -  interface: Ethernet 1/1
      description: "Underlay Connection to Leaf1"
@@ -10,3 +11,6 @@
   -  interface: Ethernet 1/2
      description: "Underlay Connection to Leaf2"
      ip_add: 100.66.0.9/31
+  -  interface: Ethernet 1/3
+     description: "Underlay Connection to Leaf2"
+     ip_add: 100.66.0.26/31
