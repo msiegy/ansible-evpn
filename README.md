@@ -28,6 +28,7 @@ Automate EVPN fabrics with Ansible
 │   │   │   └── main.yml
 │   │   ├── templates
 │   │   │   └── leaf.j2
+│   │   │   └── VNIs.j2
 │   │   └── vars
 │   │       └── main.yml
 │   └── jinja2_spine
