@@ -1,0 +1,30 @@
+---
+#Simple standalone playbook for configuring server facing ports with appropraite vlan
+  - hosts: leaf
+    tasks:
+      - name: provision VLAN
+        nxos_config:
+          lines: "vlan {{item}}"
+        with_items:
+          -  2300
+          #-  141
+        tags: add vlans
+      - name: configure server facing port to L2
+        nxos_interfaces:
+          config:
+          - name: Ethernet1/3
+            mode: layer2
+      - name: configure VLAN for server port
+        when: ("1" in inventory_hostname) or ("101" in inventory_hostname)
+        nxos_l2_interfaces:
+          config:
+          - name: Ethernet1/3
+            access:
+              vlan: 2300
+      - name: configure VLAN for server port
+        when: ("2" in inventory_hostname) or ("102" in inventory_hostname)
+        nxos_l2_interfaces:
+          config:
+          - name: Ethernet1/3
+            access:
+              vlan: 2300
