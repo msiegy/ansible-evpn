@@ -1,10 +1,11 @@
 # ansible-evpn
-Automate EVPN fabrics with Ansible
+Another Ansible role for automating EVPN fabrics
 
 ### Installation:
 - Clone this Repo to your local machine `git clone https://github.com/msiegy/ansible-evpn.git`
 - Install required python libraries (consider using venv) `pip install -r requirements.txt`
 - Edit the hosts.ini host_vars and main.yml variable files to include your target routers and relevant values.
+- The jnja2_fabric playbook will deploy underlay and overlay configs to the routers in your inventory. Use access-vlan_provision to configure switchports.
 - Run with `ansible-playbook jnja2_fabric.yml`
 
 #### Directory Structure
