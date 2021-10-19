@@ -1,9 +1,15 @@
+feature nxapi
 nv overlay evpn
 feature ospf
 feature bgp
 feature pim
+feature pbr
+feature interface-vlan
 feature vn-segment-vlan-based
+feature dhcp
+feature lldp
 feature nv overlay
+feature ngoam
 
 ip pim rp-address {{loopback1}}
 ip pim anycast-rp {{loopback1}} {{s1_loopback}}
@@ -35,6 +41,6 @@ router bgp {{ asn }}
      send-community both
      route-reflector-client
     address-family l2vpn evpn
-      send-community both
-      route-reflector-client
+     send-community both
+     route-reflector-client
 {% endfor %}

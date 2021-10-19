@@ -12,6 +12,8 @@ feature lldp
 feature nv overlay
 feature ngoam
 
+hostname {{inventory_hostname}}
+
 #for loop to configure physical fabric interfaces
 {% for interface in fabric_interfaces %}
 interface {{interface['interface']}}
