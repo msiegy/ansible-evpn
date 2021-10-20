@@ -3,11 +3,13 @@
   vars:
     asn: 65401
     vlans_l2vni:
-      - { vlan_id: 13, vni_id: 10013, addr: 10.0.11.1, mask: 24, mcast_grp: 239.1.1.0, vrf: dmz }
+      - { vlan_id: 13, vni_id: 10013, addr: 10.0.11.1, mask: 24, mcast_grp: 239.1.1.0, vrf: dmz, interfaces: ["ethernet1/2"]}
+      #- { vlan_id: 2300, vni_id: 30000, addr: 172.10.10.1, mask: 24, mcast_grp: 239.1.1.0, vrf: prod-internal, interfaces: ["ethernet1/3"]}
 
     vlans_l3vni:
       - { vlan_id: 1300, vni_id: 13000, vrf: dmz }
-
+      #- { vlan_id: 2000, vni_id: 50000, vrf: prod-internal }
+  
     vrfs:
       - { vrf: dmz, vni_id: 13000, afi: ipv4, safi: unicast }
 
@@ -64,6 +66,16 @@
       name: "vlan{{ item.vlan_id }}"
       ipv4: "{{ item.addr }}/{{ item.mask }}"
     with_items: "{{ vlans_l2vni }}"
+
+  - name: CONFIGURE L2 ACCESS PORTS
+    cisco.nxos.nxos_l2_interfaces:
+      config:
+        - name: "{{ item.1 }}"   #"Ethernet1/2"
+          access:
+            vlan: "{{ item.0.vlan_id }}"
+    loop: "{{ vlans_l2vni| subelements('interfaces') }}"
+    tags: "accessports"
+
 
 #L3 VNI section
   
