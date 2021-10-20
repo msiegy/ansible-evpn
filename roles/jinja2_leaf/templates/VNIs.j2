@@ -4,14 +4,14 @@ vlan {{l3vni['vlan_id']}}
   name {{l3vni['name']}} 
   vn-segment {{l3vni['vni_id']}}
 interface Vlan{{l3vni['vlan_id']}}
-  description  {{l3vni['name']}}-{{l3vni['vni_id']}}
+  description  {{l3vni['name']}}-L3VNI-{{l3vni['vni_id']}}
   vrf member {{l3vni['vrf']}}
   ip forward
   no ip redirects
   mtu 9216
   no shutdown
 vrf context {{l3vni['vrf']}}
-  description {{l3vni['name']}}-{{l3vni['vni_id']}}
+  description {{l3vni['name']}}-L3VNI-{{l3vni['vni_id']}}
   vni {{l3vni['vni_id']}}
   rd auto
   address-family ipv4 unicast
@@ -42,6 +42,7 @@ interface nve1
     fabric forwarding mode anycast-gateway
     no shutdown
   interface nve1
+    no shutdown
     member vni {{l2vni['vni_id']}} 
       mcast-group 239.1.1.0
   evpn

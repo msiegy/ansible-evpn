@@ -11,6 +11,6 @@
     template:
       src: roles/jinja2_leaf/templates/VNIs.j2
       dest: roles/jinja2_leaf/files/{{inventory_hostname}}-VNIs.cfg
-  - name: Push Spine Config
+  - name: Push Leaf VNI Config
     nxos_config:
       src: roles/jinja2_leaf/files/{{inventory_hostname}}-VNIs.cfg

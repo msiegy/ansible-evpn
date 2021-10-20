@@ -45,7 +45,7 @@ router ospf UNDERLAY
 router bgp {{ asn }}
   router-id {{ router_id }}
   address-family l2vpn evpn
-#for loop to configure bgp neighbor with spines
+#for loop to configure ibgp neighbor with spines
 {% for neighbor in bgp_neighbors %}
   neighbor {{neighbor['neighbor']}}
     remote-as {{neighbor['remote_as']}}
