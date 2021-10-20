@@ -28,7 +28,7 @@
     - "{{ vlans_l2vni }}"
     - "{{ vlans_l3vni }}"
 
-  - name: CONFIGURE VXLAN VTEP NVE INTERFACE L2VNI MAPPING
+  - name: CONFIGURE VXLAN VTEP NVE INTERFACE L2VNI MAPPING WITH INGRESS REPLICATION
     nxos_vxlan_vtep_vni:
       interface: nve1
       vni: "{{ item.vni_id }}"
@@ -89,7 +89,7 @@
       advertise_l2vpn_evpn: "true"
     with_items: "{{ vrfs }}"
 
-  - name: CONFIGURE GLOBAL EVPN VNI
+  - name: CONFIGURE EVPN CONTROL PLANE FOR L2 SERVICES
     cisco.nxos.nxos_evpn_vni:
       vni: "{{ item.vni_id }}"
       route_distinguisher: auto
