@@ -44,6 +44,6 @@ Another Ansible role for automating EVPN fabrics
 │           └── main.yml
 ```
 
-###Resources
+### Resources
 https://docs.ansible.com/ansible/latest/collections/cisco/nxos/index.html</br>
 https://blogs.cisco.com/datacenter/streamline-nx-os-fabric-deployments-with-cisco-dcnm-and-red-hat-ansible
