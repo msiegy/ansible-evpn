@@ -1,0 +1,99 @@
+---
+- hosts: leaf
+  vars:
+    asn: 65401
+    vlans_l2vni:
+      - { vlan_id: 13, vni_id: 10013, addr: 10.0.11.1, mask: 24, mcast_grp: 239.1.1.0, vrf: dmz }
+
+    vlans_l3vni:
+      - { vlan_id: 1300, vni_id: 13000, vrf: dmz }
+
+    vrfs:
+      - { vrf: dmz, vni_id: 13000, afi: ipv4, safi: unicast }
+
+  tasks:
+  - name: CONFIGURE TENANT VRFs
+    nxos_vrf:
+      vrf: "{{ item.vrf }}"
+      vni: "{{ item.vni_id }}"
+      rd: auto
+      state: present
+    with_items: "{{ vrfs }}"
+
+  - name: CONFIGURE VLAN TO VNI MAPPING
+    nxos_vlan:
+      vlan_id: "{{ item.vlan_id }}"
+      mapped_vni: "{{ item.vni_id }}"
+    with_items: 
+    - "{{ vlans_l2vni }}"
+    - "{{ vlans_l3vni }}"
+
+  - name: CONFIGURE VXLAN VTEP NVE INTERFACE L2VNI MAPPING
+    nxos_vxlan_vtep_vni:
+      interface: nve1
+      vni: "{{ item.vni_id }}"
+      ingress_replication: bgp
+      #multicast_group: "{{ item.mcast_grp }}"
+      suppress_arp: false
+    with_items: "{{ vlans_l2vni }}"
+
+  - name: CONFIGURE SVIs THAT ARE MAPPED TO VNIs
+    nxos_interface:
+      interface: "vlan{{ item.vlan_id }}"
+      admin_state: up
+    with_items: 
+    - "{{ vlans_l2vni }}"
+    - "{{ vlans_l3vni }}"
+
+  - name: ASSOCIATE INTERFACES TO TENANT VRF
+    nxos_vrf_interface:
+      vrf: "{{ item.vrf }}"
+      interface: "vlan{{ item.vlan_id }}"
+    with_items: 
+    - "{{ vlans_l2vni }}"
+    - "{{ vlans_l3vni }}"
+
+  - name: ENABLE ANYCAST GW UNDER L2VNI SVI
+    nxos_interface:
+      interface: "vlan{{ item.vlan_id }}"
+      fabric_forwarding_anycast_gateway: true
+    with_items: "{{ vlans_l2vni }}"
+
+  - name: CONFIGURE IP ADDRESS TO L2VNI SVI
+    nxos_l3_interface:
+      name: "vlan{{ item.vlan_id }}"
+      ipv4: "{{ item.addr }}/{{ item.mask }}"
+    with_items: "{{ vlans_l2vni }}"
+
+#L3 VNI section
+  
+  - name: CONFIGURE VXLAN VTEP NVE INTERFACE L3VNI MAPPING
+    nxos_vxlan_vtep_vni:
+      interface: nve1
+      vni: "{{ item.vni_id }}"
+      assoc_vrf: "true"
+    with_items: "{{ vlans_l3vni }}"
+
+  - name: CONFIGURE IP FORWARD UNDER L3VNI SVI
+    nxos_interface:
+      interface: "vlan{{ item.vlan_id }}"
+      ip_forward: enable
+    with_items: "{{ vlans_l3vni }}"
+  
+  - name: CONFIGURE TENANT VRFs UNDER BGP PROCESS
+    nxos_bgp_af:
+      asn: "{{ asn }}"
+      vrf: "{{ item.vrf }}"
+      afi: "{{ item.afi }}"
+      safi: "{{ item.safi }}"
+      advertise_l2vpn_evpn: "true"
+    with_items: "{{ vrfs }}"
+
+  - name: CONFIGURE GLOBAL EVPN VNI
+    cisco.nxos.nxos_evpn_vni:
+      vni: "{{ item.vni_id }}"
+      route_distinguisher: auto
+      route_target_export: auto
+      route_target_import: auto
+      #route_target_both: default
+    with_items: "{{ vlans_l2vni }}"
