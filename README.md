@@ -47,3 +47,12 @@ Another Ansible role for automating EVPN fabrics
 ### Resources
 https://docs.ansible.com/ansible/latest/collections/cisco/nxos/index.html</br>
 https://blogs.cisco.com/datacenter/streamline-nx-os-fabric-deployments-with-cisco-dcnm-and-red-hat-ansible
+
+
+### Playbook Demos
+#### Day0 Underlay and Overlay Fabric Deployment
+<img src=fabric.gif width="615" height="385">
+#### Day2 L2 and L3 VNI configuration
+<img src=vewvnis.gif width="615" height="385">
+#### Day2 Access Port configuration
+<img src=accessvlan.gif width="615" height="385">
