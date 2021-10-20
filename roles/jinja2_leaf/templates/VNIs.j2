@@ -1,17 +1,17 @@
 #Create L3VNI VRFs (Leaf)
 {% for l3vni in l3vni_vlans %}
 vlan {{l3vni['vlan_id']}}
-  name prod-internal
+  name {{l3vni['name']}} 
   vn-segment {{l3vni['vni_id']}}
 interface Vlan{{l3vni['vlan_id']}}
-  description prod-internal-L3VNI-50000
+  description  {{l3vni['name']}}-{{l3vni['vni_id']}}
   vrf member {{l3vni['vrf']}}
   ip forward
   no ip redirects
   mtu 9216
   no shutdown
 vrf context {{l3vni['vrf']}}
-  description prod-internal-L3VNI-50000
+  description {{l3vni['name']}}-{{l3vni['vni_id']}}
   vni {{l3vni['vni_id']}}
   rd auto
   address-family ipv4 unicast
@@ -34,11 +34,11 @@ interface nve1
 {% for l2vni in l2vni_vlans %}
   vlan {{l2vni['vlan_id']}}
     vn-segment {{l2vni['vni_id']}} 
-    name prod-internal-30000
+    name {{l2vni['name']}} 
   interface Vlan{{l2vni['vlan_id']}}
     description VLAN GW for staging servers
     vrf member {{l2vni['vrf']}} 
-    ip address {{l2vni['addr']}}/{{l2vni['mask']}}   tag 12345
+    ip address {{l2vni['addr']}}/{{l2vni['mask']}} tag 12345
     fabric forwarding mode anycast-gateway
     no shutdown
   interface nve1

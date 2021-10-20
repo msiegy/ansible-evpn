@@ -13,7 +13,6 @@ feature nv overlay
 feature ngoam
 
 hostname {{inventory_hostname}}
-
 #for loop to configure physical fabric interfaces
 {% for interface in fabric_interfaces %}
 interface {{interface['interface']}}
@@ -38,42 +37,7 @@ interface loopback1
 
 ip pim rp-address {{rp_address}}
 
-{% for L2VNI in L2VNI %}
-vlan {{L2VNI['vlan_id']}}
-  name {{L2VNI['vlan_name']}}
-  vn-segment {{L2VNI['vni']}}
-!
-{% endfor %}
-{% for L3VNI in L3VNI %}
-vlan {{L3VNI['vlan_id']}}
-  vn-segment {{L3VNI['vni']}}
-vrf context Tenant-1
-  vni {{L3VNI['vni']}}
-  rd auto
-  address-family ipv4 unicast
-    route-target both auto
-    route-target both auto evpn
-!
-{% endfor %}
 fabric forwarding anycast-gateway-mac 0000.2222.3333
-!
-#for loop to configure SVIs
-{% for L2VNI in L2VNI %}
-interface vlan{{L2VNI['vlan_id']}}
-  no shutdown
-  vrf member Tenant-1
-  no ip redirects
-  ip address {{L2VNI['ip_add']}}/{{L2VNI['mask']}}
-  fabric forwarding mode anycast-gateway
-  !
-{% endfor %}
-{% for L3VNI in L3VNI %}
-interface vlan{{L3VNI['vlan_id']}}
-  no shutdown
-  vrf member Tenant-1
-  ip forward
-  !
-{% endfor %}
 
 router ospf UNDERLAY
   router-id {{ router_id }}
@@ -91,3 +55,5 @@ router bgp {{ asn }}
       send-community extended
 !
 {% endfor %}
+route-map fabric-rmap-redist-subnet permit 10
+  match tag 12345
