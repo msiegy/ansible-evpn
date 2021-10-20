@@ -53,6 +53,6 @@ https://blogs.cisco.com/datacenter/streamline-nx-os-fabric-deployments-with-cisc
 #### Day0 Underlay and Overlay Fabric Deployment
 <img src=gifs/fabric.gif width="615" height="385">
 #### Day2 L2 and L3 VNI configuration
-<img src=gifs/vewvnis.gif width="615" height="385">
+<img src=gifs/newvnis.gif width="615" height="385">
 #### Day2 Access Port configuration
 <img src=gifs/accessvlan.gif width="615" height="385">
