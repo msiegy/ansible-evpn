@@ -9,7 +9,7 @@ Another Ansible role for automating EVPN fabrics
 - Run with `ansible-playbook jnja2_fabric.yml`
 - Provision server facing ports with `ansible-playbook access-vlan_provision.yml --skip-tags "add vlans"`
 </br></br>
-- Additional playbooks have been added to give examples on using Ansible against DCNM deployed fabrics. </br>
+- Additional playbooks begining with 'dcnm-' have been added for examples on using Ansible against DCNM deployed fabrics. </br>
 
 #### Directory Structure
 ```bash
