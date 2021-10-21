@@ -1,0 +1,23 @@
+---
+  - hosts: dcnm_controllers
+    gather_facts: false
+    connection: ansible.netcommon.httpapi
+    tasks:
+      - name: Create DCNM Network
+        cisco.dcnm.dcnm_network:
+          fabric: MultiSite-Fabric-Domain
+          state: merged
+          config:
+          - net_name: development_30003
+            vrf_name: dmz-servers
+            net_id: 30003
+            net_template: Default_Network_Universal
+            net_extension_template: Default_Network_Extension_Universal
+            vlan_id: 2303
+            vlan_name: dev-dmz-vni-30003
+            gw_ip_subnet: '172.30.20.1/24'
+            int_desc: 'Dev VLAN for DMZ network'
+            mtu_l3intf: 1500
+        register: result
+      - debug: 
+          var: result.response   #result.response[1].attach[0].displayName

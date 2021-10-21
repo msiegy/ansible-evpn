@@ -1,0 +1,12 @@
+---
+  - hosts: dcnm_controllers
+    gather_facts: false
+    connection: ansible.netcommon.httpapi
+    tasks:
+      - name: Query All DCNM Networks for provided Fabric
+        cisco.dcnm.dcnm_network:
+          fabric: IAD-Fabric
+          state: query
+        register: result
+      - debug: 
+          var: result.response   #result.response[1].attach[0].displayName
