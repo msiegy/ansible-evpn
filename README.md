@@ -8,6 +8,8 @@ Another Ansible role for automating EVPN fabrics
 - The jnja2_fabric playbook will deploy underlay and overlay configs to the routers in your inventory. Use access-vlan_provision to configure switchports.
 - Run with `ansible-playbook jnja2_fabric.yml`
 - Provision server facing ports with `ansible-playbook access-vlan_provision.yml --skip-tags "add vlans"`
+</br></br>
+- Additional playbooks have been added to give examples on using Ansible against DCNM deployed fabrics. </br>
 
 #### Directory Structure
 ```bash
