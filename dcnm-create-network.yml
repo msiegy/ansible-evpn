@@ -1,7 +1,6 @@
 ---
   - hosts: dcnm_controllers
     gather_facts: false
-    connection: ansible.netcommon.httpapi
     tasks:
       - name: Create DCNM Network
         cisco.dcnm.dcnm_network:

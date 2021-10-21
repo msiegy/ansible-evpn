@@ -1,0 +1,19 @@
+---
+  - hosts: dcnm_controllers
+    gather_facts: false
+    tasks:
+      - name: Set Interfaces to Switchport Mode Access
+        cisco.dcnm.dcnm_interface:
+          fabric: IAD-Fabric
+          state: merged
+          config:
+          - name: Ethernet1/10
+            type: eth
+            switch:
+              - 10.82.145.224
+            deploy: true
+            profile:
+              description: "Server Access Port"
+              admin_state: true
+              mode: access
+              mtu: jumbo
