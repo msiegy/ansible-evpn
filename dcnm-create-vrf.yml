@@ -1,0 +1,22 @@
+---
+  - hosts: dcnm_controllers
+    gather_facts: false
+    tasks:
+      - name: Create DCNM Network
+        cisco.dcnm.dcnm_vrf:
+          fabric: MultiSite-Fabric-Domain
+          state: merged
+          config:
+          - vrf_name: partner-zone
+            vrf_id: 50003
+            vrf_template: Default_VRF_Universal
+            vrf_extension_template: Default_VRF_Extension_Universal
+            vlan_id: 2003
+            attach:
+            - ip_address: 10.82.145.224
+              deploy: true
+            - ip_address: 10.82.145.225
+              deploy: true
+        register: result
+      - debug: 
+          var: result.response   #result.response[1].attach[0].displayName
