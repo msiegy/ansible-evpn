@@ -10,3 +10,24 @@
         register: result
       - debug: 
           var: result.response   #result.response[1].attach[0].displayName
+      
+      - name: Query all the switches in the fabric
+        cisco.dcnm.dcnm_inventory:
+          fabric: IAD-Fabric
+          state: query
+        register: result
+      - debug:
+          var: result.response
+          #ansible_command_timeout: 1000  set in ansible.cfg
+          #ansible_connect_timeout: 1000  set in ansible.cfg
+
+      - name: Query Interfaces
+        cisco.dcnm.dcnm_interface:
+          fabric: IAD-Fabric
+          state: query
+          config:
+            - name: Ethernet1/5
+              switch:
+                - "10.82.145.224"
+            #- switch:
+            #    - "10.82.145.224"
